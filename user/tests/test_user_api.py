@@ -6,7 +6,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 CREATE_USER_URL = reverse('user:create')
-TOKEN_URL = ('user:token')
+TOKEN_URL = reverse('user:token')
 
 def create_user(**params):
     return get_user_model().objects.create_user(**params)
@@ -56,7 +56,7 @@ class PublicUserApiTests(TestCase):
         user_exists = get_user_model().objects.filter(
             email=payload['email']
         ).exists()
-        self.assertEqual(user_exists, False)
+        self.assertFalse(user_exists)
 
     def test_create_token_for_user(self):
         """Test that token is created for a user"""

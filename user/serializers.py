@@ -1,4 +1,3 @@
-from tkinter.ttk import Style
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 
@@ -7,7 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['email', 'password', 'name']
+        fields = ('email', 'password', 'name')
         extra_kwargs = {
             'password': {'write_only': True, 'min_length': 5}
         }
@@ -37,7 +36,7 @@ class AuthTokenSerializer(serializers.Serializer):
         )
         if not user:
             msg = ('Unable to authenticate with provided credentials')
-            raise serializers.ValidationError(msg, code='authentication')
+            raise serializers.ValidationError(msg, code='authorization')
 
         attrs['user'] = user
         return attrs
